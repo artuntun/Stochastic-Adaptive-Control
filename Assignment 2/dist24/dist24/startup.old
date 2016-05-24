@@ -1,0 +1,31 @@
+format compact
+warning off
+if strcmp(computer,'PCWIN'),
+    disp('Windows environment');
+    path(path,'c:\nkp\ver12\pol');
+    path(path,'c:\nkp\ver12\sys');
+    path(path,'c:\nkp\ver12\sig');
+    path(path,'c:\nkp\ver12\plt');
+    path(path,'c:\nkp\ver12\ctrl');
+elseif strcmp(computer,'HPUX'),
+    disp('HP  environment');
+    path(path,'/home2/nkp/toolbox/ver12/pol');
+    path(path,'/home2/nkp/toolbox/ver12/sys');
+    path(path,'/home2/nkp/toolbox/ver12/sig');
+    path(path,'/home2/nkp/toolbox/ver12/plt');
+    path(path,'/home2/nkp/toolbox/ver12/ctrl');
+elseif strcmp(computer,'GLNX86'),
+    disp('Linux  environment');
+    path(path,'/home/nkp/toolbox/ver12/pol');
+    path(path,'/home/nkp/toolbox/ver12/sys');
+    path(path,'/home/nkp/toolbox/ver12/sig');
+    path(path,'/home/nkp/toolbox/ver12/plt');
+    path(path,'/home/nkp/toolbox/ver12/ctrl');
+elseif strcmp(computer,'SOL2'),
+    disp('G-bar  environment');
+    path(path,'ver12/pol');
+    path(path,'ver12/sys');
+    path(path,'ver12/sig');
+    path(path,'ver12/plt');
+    path(path,'ver12/ctrl');
+end;

@@ -1,0 +1,37 @@
+function [ry,t]=acfss(a,r1,c,r2,r12,n);
+ 
+%usage: [ry,t]=acf(a,r1,c,r2,r12,n)
+% n:	max number of lags
+% a:  	System matrix
+% r1:   variance of processnoise
+% c:    Observation matrix (row)
+% r2:   Variance of Measurement noise
+% r12:  Crosscovariance of Process- and Measurement noise
+% ry:	covariance function
+% t:	time index
+
+% Programmed 1994 by Niels K. Poulsen 
+% Department of Mathematical Modelling, 
+% Technical University of Denmark 
+% 
+
+% Testfil: t24.m
+
+%----------------------------------------------------------------------
+m=max(size(a));
+ry=zeros(2*n+1,1);
+t=1:2*n+1; t=t-(n+1); t=t(:);
+%----------------------------------------------------------------------
+p=syslyap(a,r1);
+%----------------------------------------------------------------------
+ry(n+1)=c*p*c'+r2;
+f=eye(m);
+for i=1:n,
+ ry(n+1+i)=c*f*(a*p*c'+r12);
+ f=a*f;
+end
+% ry:  -n 1-n ... -1  0   1 ... n-1  n
+% i:    1  2       n n+1 n+2     2n 2n+1
+for i=1:n,
+ ry(i)=ry(2*n+2-i);
+end
