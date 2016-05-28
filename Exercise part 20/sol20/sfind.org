@@ -1,0 +1,125 @@
+function [fskema,model,ic]=sfind(nmax,Ze,Zt,mode)
+%Usage: [fskema,model,ic]=sfind(nmax,Ze,Zt,mode)
+%
+%Input:
+%
+% nmax:		Maximal order
+% Ze:		Estimation data set
+% Zt:		Validation (test) data set
+% mode:		Mode for printing 
+%                (0) Nothing is printed, 
+%                (1) Just the order is printed
+%                (2) estimation results are printed
+
+%------------------------------------------------------------------
+% Some input administration
+if nargin<3,
+ Zt=[];
+ mode=0;
+elseif nargin<4
+ mode=0;
+end
+%------------------------------------------------------------------
+% -- Determine models --
+N=length(Ze);
+
+ns=[0 0 0 0 0 1]; 
+%model=ns; loss=[Ze(:,1)'*Ze(:,1)/N 0];
+model=[]; loss=[];
+
+for i=1:nmax
+ for j=1:3,
+  ns(j)=ns(j)+1;
+  if mode>0, clc; disp(ns); end;
+  if isempty(Zt), 
+   if ns(2)>0, 
+    th=pem(Ze,ns); 
+    res=pe(Ze,th);
+   else,
+    th=ar(Ze(:,1),ns(1),'ls'); 
+    res=pe(Ze(:,1),th);
+   end;
+   lest=res'*res/length(res); % nkp
+   loss=[loss; lest th2nofp(th)];
+  else % Test data set
+   if ns(2)>0, 
+    th=pem(Ze,ns); 
+    res=pe(Ze,th); 
+    rest=pe(Zt,th); 
+   else,
+    th=ar(Ze(:,1),ns(1),'ls'); 
+    res=pe(Zt(:,1),th); 
+    rest=pe(Zt(:,1),th); 
+   end;
+   lest=res'*res/length(res);
+   ltest=rest'*rest/length(rest);
+   loss=[loss; lest ltest th2nofp(th)];
+  end
+  model=[model; ns];
+  if mode>1, present(th); disp('hit it');  pause; end;
+ end
+end
+
+clc;
+if isempty(Zt),
+ disp('      Diff      Loss     #parm')
+ disp([[NaN; diff(loss(:,1))] loss])
+ plot(loss(:,1),'*-'); grid; title('Loss function'); xlabel('model no.');
+else
+ disp('      Diff                Loss               #parm')
+ disp([[NaN NaN; diff(loss(:,1:2))] loss])
+ plot(loss(:,1:end-1),'*-'); 
+ grid; title('Loss function'); xlabel('model no.');
+end
+%print loss.pps
+disp('hit it'); pause
+
+%------------------------------------------------------------------
+% -- Ftest --
+n=length(loss);
+fskema=zeros(n-1,n-1);
+n=length(loss);
+lossA=loss(1:end-1,1); npA=loss(1:end-1,end);
+lossB=loss(2:end,1);   npB=loss(2:end,end);
+for i=1:n-1,
+ for j=i:n-1,
+  dloss=(lossA(i)-lossB(j))/lossB(j);
+  dpar=(N-npB(j))/(npB(j)-npA(i));
+  ftest=dloss*dpar;
+  if ftest>0,
+   fskema(i,j)=round(pf(ftest,npB(j)-npA(i),N-npB(j))*100);
+   %disp([lossA(i) lossB(j) npA(i) npB(j) round(pf(ftest,npB(j)-npA(i),N-npB(j))*100)])
+   %pause
+  end
+ end;
+end;
+
+clc;
+disp('Models'); disp(' ');
+disp([(1:n)' model]);
+disp('hit it'); pause;
+disp(' ')
+disp('F test');
+disp(' ')
+disp([ NaN 2:n; (1:n-1)' fskema]);
+disp(' ')
+
+%------------------------------------------------------------------
+% -- Aic, Bic FPE --
+
+np=loss(:,end); loss=loss(:,1);
+ic=zeros(n,3);
+for i=1:n,
+ ic(i,1)=(1+2*np(i)/N)*loss(i);       % AIC
+ ic(i,2)=(1+log(N)*np(i)/N)*loss(i);  % BIC
+ ic(i,3)=(N+np(i))*loss(i)/(N-np(i)); % FPE 
+end
+
+disp(' ')
+plot(ic,'*-'); grid;
+title('AIC, BIC, FPE'); xlabel('model no.');
+[mi,im]=min(ic);
+disp(' '); disp('AIC BIC FPE'); disp(' ');
+disp(im)
+%print aic.pps
+

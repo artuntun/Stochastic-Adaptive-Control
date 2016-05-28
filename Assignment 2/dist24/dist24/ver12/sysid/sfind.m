@@ -152,6 +152,7 @@ end
 disp(' ')
 plot(np,ic,'*-'); grid;
 title('AIC, BIC, FPE'); xlabel('model no.');
+legend('AIC', 'BIC', 'FPE')
 [mi,im]=min(ic);
 disp(' '); disp('AIC BIC FPE'); disp(' ');
 disp(np(im)')

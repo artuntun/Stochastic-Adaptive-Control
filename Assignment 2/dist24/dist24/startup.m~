@@ -24,13 +24,13 @@ yt = data(:,1);
 ut = data(:,2);
 zt = [yt ut];
 Zt = dtrend(zt);
+% plot(y)
 
-[ns,le,lt]=sfind(3,Ze,Zt,2);
+% % [ns,le,lt]=sfind(3,Ze,Zt,2);
 
-%% Question 1.2
-SYS = armax(Ze, [3 3 1 1])
+SYS = armax(Ze, [2 2 1 1])
 present(SYS)
 [parm p] = th2par(SYS);
 estpres(parm, p)
 % resid(SYS, Ze)
-% pzmap(SYS,'sd',2.5758)
+pzmap(SYS,'sd',2.5758)

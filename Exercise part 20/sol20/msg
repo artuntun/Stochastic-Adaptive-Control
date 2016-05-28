@@ -1,0 +1,27 @@
+[b,a]=ss2tf(As,Bs,Cs,Ds)
+P=dare(As',Cs',R1,R2);
+K=As*P*Cs'*inv(R2+Cs*P*Cs');
+[c,a]=ss2tf(As,K,Cs,1);
+
+b =
+         0    0.0109    0.0091
+a =
+    1.0000   -1.5652    0.5909
+c =
+    1.0000   -1.0558    0.2393
+
+>> th=armax(z,[2 2 2 1]);
+>> present(th)
+This matrix was created by the command ARMAX  on 1/13 2000 at 15:25
+Loss fcn: 0.28716   Akaike`s FPE: 0.29413 Sampling interval 1
+The polynomial coefficients and their standard deviations are
+B =
+         0    0.0117    0.0030
+         0    0.0027    0.0038
+A =
+    1.0000   -1.6717    0.6919
+         0    0.0350    0.0332
+C =
+    1.0000   -1.1044    0.3263
+         0    0.0551    0.0440
+>>
