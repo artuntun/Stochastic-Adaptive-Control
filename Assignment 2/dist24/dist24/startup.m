@@ -19,6 +19,8 @@ ye = data(:,1);
 ue = data(:,2);
 ze=[ye ue];
 Ze = dtrend(ze);
+
+
 load data2
 yt = data(:,1);
 ut = data(:,2);
