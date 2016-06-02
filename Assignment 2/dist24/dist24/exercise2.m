@@ -39,24 +39,38 @@ Je=Je(end)/nstp; Ju=Ju(end)/nstp; clc;
 fprintf('Je = %f Ju = %f \n',Je,Ju);
 
 disp('theortical Ju')
-trfvar(acl,bcl)*s2
+Ju = trfvar(acl,bcl)*s2
 disp('theoretical Je')
-s2
+Je = s2
 
 %% Question 2.7
 wb_27
 output = data(:,3); 
 input = data(:,4);
 %%%%%%%% Iterative coefficient estimation %%%%%%%%%%%%%%%%%%%%%%%%%%
-parameters = [];
-ye = [output(1:10)];
-ue = [input(1:10)];
-for i = 11:length(output)
- ye = [ye;output(i)]; 
- ue = [ue;input(i)];
- ze=[ye ue];
- Ze = dtrend(ze);
- SYS = armax(Ze, [3 1 0 1]);
- [parm p] = th2par(SYS);
- parameters = [parameters; parm'];
-end
+parametes = itereatCoeffi(output, input)
+%% plotting evolution of coefficients
+plot(parameters(:,1)); grid
+hold on
+plot(parameters(:,2));
+plot(parameters(:,3));
+plot(parameters(:,4));
+legend('a_1','a_2', 'a_3', 'b_1')
+hold off
+
+%% Question 2.7 with PZ
+wb_27_2
+output = data(:,3); 
+input = data(:,4);
+parameters = itereatCoeffi(output, input)
+%% Plotting 
+plot(parameters(:,1)); grid
+hold on
+plot(parameters(:,2));
+plot(parameters(:,3));
+plot(parameters(:,4));
+legend('a_1','a_2', 'a_3', 'b_1')
+hold off
+
+
+

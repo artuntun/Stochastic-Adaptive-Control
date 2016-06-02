@@ -102,14 +102,14 @@ end
 %------------------------------------------------------------------------
 % plt 				  % plot results
 %------------------------------------------------------------------------
-% signatur={'w->y','e->y','w->u','e->u'};
-% for ik=1:4,
-% %for ik=2:2:4,
-%  disp(' '); disp(signatur{ik})
-%  [acl,bcl,kcl]=clloop(A,B,k,C,R,S,Q,ik);
-%  trfshow(acl,bcl,kcl);
-%  if rem(ik,2)==0, 
-%   trfvar(acl,bcl)*s2
-%  end
-%  pause
-% end
+signatur={'w->y','e->y','w->u','e->u'};
+for ik=1:4,
+%for ik=2:2:4,
+ disp(' '); disp(signatur{ik})
+ [acl,bcl,kcl]=clloop(A,B,k,C,R,S,Q,ik);
+ trfshow(acl,bcl,kcl);
+ if rem(ik,2)==0, 
+  trfvar(acl,bcl)*s2
+ end
+ pause
+end
