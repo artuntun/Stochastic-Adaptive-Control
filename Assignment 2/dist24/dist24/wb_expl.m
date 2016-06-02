@@ -23,7 +23,7 @@ p0=10000;
 P=eye(size(th,1))*p0;
 %------------------------------------------------------------------------
 % Reference signal
-refsig=3; % 1-3
+refsig=4; % 1-3
 switch refsig,
  case 1, wt=zeros(nstp,1);
  case 2, wt=stepf(nstp,30);

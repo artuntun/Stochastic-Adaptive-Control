@@ -1,0 +1,16 @@
+function u=sqwave(n,per)
+% Usage:  u=sqwave(n,per)
+%
+% Create a square wave with length n and
+% a period eqaul per.
+
+% Programmed by Niels K. Poulsen
+% Department of Mathematical Modelling,
+% Technical University of Denmark
+
+% Revised in Oxford
+
+m=ceil(n/per);
+u=osc(m);
+u=kron(u,ones(per,1));
+u=u(1:n);

@@ -10,7 +10,7 @@ nstp=100;
 [A,B,k,C,s2]=sysinit(dets); % Determine linear model (ie. get system)
 %------------------------------------------------------------------------
 % Reference signal
-refsig=3; % 1-3
+refsig=4; % 1-3
 switch refsig,
  case 1, wt=zeros(nstp,1);
  case 2, wt=stepf(nstp,30);

@@ -4,13 +4,13 @@
 global data % some data and time administration
 data=[]; Je=0; Ju=0;
 
-dets=1; % deterministisk (1) eller stokastisk (0) simulation
+dets=0; % deterministisk (1) eller stokastisk (0) simulation
 nstp=100;
 %------------------------------------------------------------------------
 [A,B,k,C,s2]=sysinit(dets); % Determine linear model (ie. get system)
 %------------------------------------------------------------------------
 % Reference signal
-refsig=2; % 1-3
+refsig=1; % 1-3
 switch refsig,
  case 1, wt=zeros(nstp,1);
  case 2, wt=stepf(nstp,30);
@@ -28,14 +28,14 @@ wft=wt;
 % ireg=5 GSP (Poleplacement controller)
 % Ireg=6 LQG
 % ireg=7 MV2 
-ireg=2;
+ireg=0;
 
 if ireg==0, % Uncontrolled situation
  Q=0; S=0; R=1;
 elseif ireg==1,
  [Q,R,S,G]=dsnmv0(A,B,k,C);
 elseif ireg==2,
- Am=[1 -0.1]; 
+ Am=[1 -0.417]; 
  Bm=sum(Am);    
  [Q,R,S,G]=dsnpz(A,B,k,C,Am,Bm);
 elseif ireg==3,
