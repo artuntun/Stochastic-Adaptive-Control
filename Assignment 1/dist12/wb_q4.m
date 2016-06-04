@@ -26,14 +26,12 @@ Q2 = 0.01;
 [L,S,e] = dlqr(A,B,Q1,Q2);
 
 
+
 %------------------------------------------------------------------
 
 % Filter design and initiliazation goes here
-[K,P,Z,E] = dlqe(A,B,Cm,R1,R2);
-P_err_infty = Z;
-x0 = [0;0];
-x_predict = x0;
-x_estim_stored = [];
+
+
 
 measinit
 
@@ -57,17 +55,16 @@ for it=1:nstp,
 
  % Here goes data update of Kalman filter
 
- x_estim = x_predict + K*(ym-Cm*x_predict);
- x_estim_stored = [x_estim_stored x_estim];
-   
+ 
+
+ 
 
  % Controller goes her
 
  u=-L*xt;
 
 
-
- sdata=[sdata; t w y u ym(1) x_estim(1)];
+ sdata=[sdata; t w y u];
 
  
 
@@ -80,8 +77,8 @@ for it=1:nstp,
 
 
   % Here goes time update of Kalman filter
+
     
- x_predict = A*x_estim + B*u;   
 
 
 

@@ -50,11 +50,11 @@ input = data(:,4);
 %%%%%%%% Iterative coefficient estimation %%%%%%%%%%%%%%%%%%%%%%%%%%
 parametes = itereatCoeffi(output, input)
 %% plotting evolution of coefficients
-plot(parameters(:,1)); grid
+plot(parametes(:,1)); grid
 hold on
-plot(parameters(:,2));
-plot(parameters(:,3));
-plot(parameters(:,4));
+plot(parametes(:,2));
+plot(parametes(:,3));
+plot(parametes(:,4));
 legend('a_1','a_2', 'a_3', 'b_1')
 hold off
 

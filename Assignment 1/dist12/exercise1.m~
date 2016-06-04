@@ -175,12 +175,6 @@ P_u_cl = [L -L]*P_cl*[L -L]'
 %% Question 1.20
 realization = [];
 for i = 1:100
-    wb_q20
+    wb_120
     var_output = var(sdata(:,3));
-    var_input = var(sdata(:,4));
-    realization = [realization;var_output var_input];
-end
-disp('Experimental input variance')
-mean(realization(:,1))
-disp('Experimental output variance')
-mean(realization(:,2))
+    var_input = var
