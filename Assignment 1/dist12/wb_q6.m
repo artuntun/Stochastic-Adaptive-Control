@@ -2,10 +2,9 @@ global Stsys % Simulation system (Ssys) accessible through global
 
 global time
 
-global sdata edata % data for plotting
+global sdata edata% data for plotting
 
 sdata=[]; edata=[];
-
 Jc=0; Ju=0;             % Initilize cost functions (error (c) and effort (u))
 
 
@@ -63,11 +62,11 @@ for it=1:nstp,
 
  % Controller goes her
 
- u=-L*xt;
+ u=0;
+ err = xt-x_estim;
 
 
-
- sdata=[sdata; t w y u ym(1) x_estim(1)];
+ sdata=[sdata; t w y u ym(1) x_estim(1) err(1)];
 
  
 
